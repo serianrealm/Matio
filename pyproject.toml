@@ -1,0 +1,12 @@
+[project]
+name = "matio"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "gradio>=5.47.2",
+    "peft>=0.17.1",
+    "torch>=2.8.0",
+    "transformers>=4.56.2",
+]
