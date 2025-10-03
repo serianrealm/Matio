@@ -1,1 +1,5 @@
-.footer{display:none !important}
+footer{display:none !important}
+.generate button {
+    font-size: 24px;
+    font-weight: bold;
+}

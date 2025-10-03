@@ -5,8 +5,10 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "decord>=0.6.0",
     "gradio>=5.47.2",
     "peft>=0.17.1",
     "torch>=2.8.0",
+    "torchvision>=0.23.0",
     "transformers>=4.56.2",
 ]
