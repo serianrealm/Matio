@@ -32,9 +32,9 @@ def load_video(video_path):
     return pixel_values, num_frames
 
 class ModelIndex(Index):
-    tokenizer = AutoTokenizer.from_pretrained(".huggingface/OpenGVLab/InternVideo2_5_Chat_8B", trust_remote_code=True)
-    model = AutoModel.from_pretrained(".huggingface/OpenGVLab/InternVideo2_5_Chat_8B", trust_remote_code=True).half().cuda().to(torch.bfloat16)
-    model = PeftModel.from_pretrained(model, ".adapter/InternVideo2_5_Chat_8B/checkpoint-3000")
+    tokenizer = AutoTokenizer.from_pretrained("OpenGVLab/InternVideo2_5_Chat_8B", trust_remote_code=True)
+    model = AutoModel.from_pretrained("OpenGVLab/InternVideo2_5_Chat_8B", trust_remote_code=True).half().cuda().to(torch.bfloat16)
+    model = PeftModel.from_pretrained(model, "models/checkpoint-3000")
     generation_config = dict(
         do_sample=False,
         temperature=0.0,
@@ -47,7 +47,7 @@ class ModelIndex(Index):
             pixel_values, num_frames = load_video(video_path=inputs["video"])
             pixel_values = pixel_values.to(torch.bfloat16).to(self.model.device)
             video_prefix = "".join([f"Frame{i+1}: <image>\n" for i in range(len(num_frames))])
-            question = "Describe this video in detail."
+            question = "This is a sign language conversation and you are the translator. Pay attention to the person at the center, and pay attention to his or her actions and movements. Try to understand sign language within frames, and translate into natural language that appears in chat in common daily life. Instead of translating the imaginary content, only translate the content you see that can determine confidently. Do not describe the content, but only output what the person says in natural language."
             prompt = video_prefix + question
             output = self.model.chat(self.tokenizer, pixel_values, prompt, self.generation_config, return_history=False)
         print(output)
